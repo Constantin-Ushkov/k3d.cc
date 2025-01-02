@@ -38,6 +38,7 @@
             uiLoginButton = new Button();
             uiCancelButton = new Button();
             uiNewAccountButton = new Button();
+            uiDataLocationFolderDialog = new FolderBrowserDialog();
             SuspendLayout();
             // 
             // label1
@@ -53,17 +54,18 @@
             // 
             uiDataLocationText.Location = new Point(12, 27);
             uiDataLocationText.Name = "uiDataLocationText";
-            uiDataLocationText.Size = new Size(156, 23);
+            uiDataLocationText.Size = new Size(286, 23);
             uiDataLocationText.TabIndex = 1;
             // 
             // uiBrowseDataLocationButton
             // 
-            uiBrowseDataLocationButton.Location = new Point(174, 27);
+            uiBrowseDataLocationButton.Location = new Point(304, 26);
             uiBrowseDataLocationButton.Name = "uiBrowseDataLocationButton";
             uiBrowseDataLocationButton.Size = new Size(24, 23);
             uiBrowseDataLocationButton.TabIndex = 2;
             uiBrowseDataLocationButton.Text = "...";
             uiBrowseDataLocationButton.UseVisualStyleBackColor = true;
+            uiBrowseDataLocationButton.Click += uiBrowseDataLocationButton_Click;
             // 
             // label2
             // 
@@ -100,25 +102,27 @@
             // 
             // uiLoginButton
             // 
-            uiLoginButton.Location = new Point(204, 83);
+            uiLoginButton.Location = new Point(206, 115);
             uiLoginButton.Name = "uiLoginButton";
             uiLoginButton.Size = new Size(122, 23);
             uiLoginButton.TabIndex = 7;
             uiLoginButton.Text = "Log in";
             uiLoginButton.UseVisualStyleBackColor = true;
+            uiLoginButton.Click += uiLoginButton_Click;
             // 
             // uiCancelButton
             // 
-            uiCancelButton.Location = new Point(204, 54);
+            uiCancelButton.Location = new Point(206, 86);
             uiCancelButton.Name = "uiCancelButton";
             uiCancelButton.Size = new Size(122, 23);
             uiCancelButton.TabIndex = 8;
             uiCancelButton.Text = "Cancel";
             uiCancelButton.UseVisualStyleBackColor = true;
+            uiCancelButton.Click += uiCancelButton_Click;
             // 
             // uiNewAccountButton
             // 
-            uiNewAccountButton.Location = new Point(204, 26);
+            uiNewAccountButton.Location = new Point(206, 58);
             uiNewAccountButton.Name = "uiNewAccountButton";
             uiNewAccountButton.Size = new Size(122, 23);
             uiNewAccountButton.TabIndex = 9;
@@ -127,8 +131,10 @@
             // 
             // LoginForm
             // 
+            AcceptButton = uiLoginButton;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            CancelButton = uiCancelButton;
             ClientSize = new Size(340, 152);
             Controls.Add(uiNewAccountButton);
             Controls.Add(uiCancelButton);
@@ -144,6 +150,7 @@
             Name = "LoginForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Logging in...";
+            FormClosing += LoginForm_FormClosing;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -160,5 +167,6 @@
         private Button uiLoginButton;
         private Button uiCancelButton;
         private Button uiNewAccountButton;
+        private FolderBrowserDialog uiDataLocationFolderDialog;
     }
 }

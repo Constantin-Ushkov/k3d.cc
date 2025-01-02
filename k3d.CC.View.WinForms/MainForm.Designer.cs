@@ -31,10 +31,11 @@
             uiMainStatusStrip = new StatusStrip();
             uiMainMenuStrip = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
+            uiLogOutMenuItem = new ToolStripMenuItem();
             viewToolStripMenuItem = new ToolStripMenuItem();
             uiTodayMainMenuItem = new ToolStripMenuItem();
+            uiLoginMainMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
-            uiLogOutMenuItem = new ToolStripMenuItem();
             uiMainMenuStrip.SuspendLayout();
             SuspendLayout();
             // 
@@ -62,33 +63,41 @@
             fileToolStripMenuItem.Size = new Size(37, 20);
             fileToolStripMenuItem.Text = "&File";
             // 
+            // uiLogOutMenuItem
+            // 
+            uiLogOutMenuItem.Enabled = false;
+            uiLogOutMenuItem.Name = "uiLogOutMenuItem";
+            uiLogOutMenuItem.Size = new Size(115, 22);
+            uiLogOutMenuItem.Text = "Log &out";
+            uiLogOutMenuItem.Click += uiLogOutMenuItem_Click;
+            // 
             // viewToolStripMenuItem
             // 
-            viewToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { uiTodayMainMenuItem });
+            viewToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { uiTodayMainMenuItem, uiLoginMainMenuItem });
             viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             viewToolStripMenuItem.Size = new Size(44, 20);
             viewToolStripMenuItem.Text = "&View";
             // 
             // uiTodayMainMenuItem
             // 
+            uiTodayMainMenuItem.Enabled = false;
             uiTodayMainMenuItem.Name = "uiTodayMainMenuItem";
-            uiTodayMainMenuItem.Size = new Size(105, 22);
+            uiTodayMainMenuItem.Size = new Size(180, 22);
             uiTodayMainMenuItem.Text = "&Today";
             uiTodayMainMenuItem.Click += uiTodayMainMenuItem_Click;
+            // 
+            // uiLoginMainMenuItem
+            // 
+            uiLoginMainMenuItem.Name = "uiLoginMainMenuItem";
+            uiLoginMainMenuItem.Size = new Size(180, 22);
+            uiLoginMainMenuItem.Text = "&Login";
+            uiLoginMainMenuItem.Click += uiLoginMainMenuItem_Click;
             // 
             // helpToolStripMenuItem
             // 
             helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             helpToolStripMenuItem.Size = new Size(44, 20);
             helpToolStripMenuItem.Text = "&Help";
-            // 
-            // uiLogOutMenuItem
-            // 
-            uiLogOutMenuItem.Enabled = false;
-            uiLogOutMenuItem.Name = "uiLogOutMenuItem";
-            uiLogOutMenuItem.Size = new Size(180, 22);
-            uiLogOutMenuItem.Text = "Log &out";
-            uiLogOutMenuItem.Click += uiLogOutMenuItem_Click;
             // 
             // MainForm
             // 
@@ -117,5 +126,6 @@
         private ToolStripMenuItem helpToolStripMenuItem;
         private ToolStripMenuItem uiTodayMainMenuItem;
         private ToolStripMenuItem uiLogOutMenuItem;
+        private ToolStripMenuItem uiLoginMainMenuItem;
     }
 }

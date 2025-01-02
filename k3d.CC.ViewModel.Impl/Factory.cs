@@ -6,8 +6,6 @@ namespace k3d.CC.ViewModel.Impl
     public class Factory
     {
         public static IViewModel CreateViewModel(IModel model)
-        {
-
-        }
+            => new ViewModel(model);
     }
 }
