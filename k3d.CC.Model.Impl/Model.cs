@@ -5,7 +5,7 @@ namespace k3d.CC.Model.Impl
 {
     public class Model: IModel
     {
-        public Model(IDataProvider dataProvider)
+        public Model(IModelDataProvider dataProvider)
         {
         }
     }

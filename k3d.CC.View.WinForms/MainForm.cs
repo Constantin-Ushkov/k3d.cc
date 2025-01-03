@@ -1,4 +1,7 @@
+using k3d.CC.ViewModel.Impl;
 using k3d.CC.ViewModel.Interface;
+using k3d.CC.Model.Impl;
+using k3d.CC.Data.Impl.FS;
 
 namespace k3d.CC.View.WinForms
 {
@@ -8,12 +11,16 @@ namespace k3d.CC.View.WinForms
         {
             InitializeComponent();
 
-            _loginForm = new LoginForm
+            _vmFactory = new ViewModelFactory(new ModelFactory(new DataProvider()));
+            _userVm = _vmFactory.CreateUserViewModel();
+
+            _userVm.LoggedIn += OnLogin;
+            _userVm.LoggedOut += OnLogout;
+
+            _loginForm = new LoginForm(_userVm)
             {
                 MdiParent = this
             };
-
-            _loginForm.LoggedIn += (sender, args) => OnLogin(args);
 
             _todayForm = new TodayForm
             {
@@ -29,31 +36,26 @@ namespace k3d.CC.View.WinForms
         #region Main Menu Handlers
 
         private void uiLogOutMenuItem_Click(object sender, EventArgs e)
-        {
-            OnLogout();
-        }
+            => _userVm.Logout();
 
         private void uiLoginMainMenuItem_Click(object sender, EventArgs e)
-        {
-            _loginForm.Show();
-        }
+            => _loginForm.Show();
 
         private void uiTodayMainMenuItem_Click(object sender, EventArgs e)
-        {
-            _todayForm.Show();
-        }
+            => _todayForm.Show();
 
         #endregion // Main Menu Handlers
 
-        private void OnLogin(LoginForm.LoggedInEventArgs args)
+        private void OnLogin(object? sender, EventArgs args)
         {
-            _viewModel = args.ViewModel;
+            _loginForm.Hide();
+            _vm = _vmFactory.CreateViewModel(_userVm);
 
             uiLogOutMenuItem.Enabled = true;
             uiTodayMainMenuItem.Enabled = true;
         }
 
-        private void OnLogout()
+        private void OnLogout(object? sender, EventArgs args)
         {
             uiLogOutMenuItem.Enabled = false;
             uiTodayMainMenuItem.Enabled = false;
@@ -63,10 +65,12 @@ namespace k3d.CC.View.WinForms
                 _todayForm.Hide();
             }
 
-            _viewModel = null;
+            _vm = null;
         }
 
-        private IViewModel? _viewModel;
+        private readonly IViewModelFactory _vmFactory;
+        private readonly IUserViewModel _userVm;
+        private IViewModel? _vm;
         private readonly LoginForm _loginForm;
         private readonly TodayForm _todayForm;
     }

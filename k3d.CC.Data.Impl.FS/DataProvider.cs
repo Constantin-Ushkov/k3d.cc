@@ -2,7 +2,7 @@
 
 namespace k3d.CC.Data.Impl.FS
 {
-    internal class DataProvider: IDataProvider
+    public class DataProvider: IModelDataProvider
     {
     }
 }
