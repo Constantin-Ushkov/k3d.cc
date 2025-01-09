@@ -1,6 +1,6 @@
 ﻿namespace k3d.CC.View.WinForms
 {
-    partial class LoginForm
+    partial class LoginDialog
     {
         /// <summary>
         /// Required designer variable.
@@ -128,6 +128,7 @@
             uiNewAccountButton.TabIndex = 9;
             uiNewAccountButton.Text = "New Account";
             uiNewAccountButton.UseVisualStyleBackColor = true;
+            uiNewAccountButton.Click += uiNewAccountButton_Click;
             // 
             // LoginForm
             // 

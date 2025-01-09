@@ -2,14 +2,19 @@
 
 namespace k3d.CC.View.WinForms
 {
-    public partial class LoginForm : Form
+    public partial class LoginDialog : Form
     {
-        public LoginForm(IUserViewModel userVm)
+        public LoginDialog(IUserViewModel userVm)
         {
             InitializeComponent();
             _userVm = userVm;
 
             // todo: general logging (to display in main form)
+
+            _userVm.LoggedIn += (sender, args) =>
+            {
+                DialogResult = DialogResult.OK;
+            };
         }
 
         private void uiBrowseDataLocationButton_Click(object sender, EventArgs e)
@@ -31,6 +36,17 @@ namespace k3d.CC.View.WinForms
 
         private void uiCancelButton_Click(object sender, EventArgs e)
             => Hide();
+
+        private void uiNewAccountButton_Click(object sender, EventArgs e)
+        {
+            var createUserDlg = new CreateUserDialog(_userVm);
+
+            if (createUserDlg.ShowDialog() == DialogResult.OK)
+            {
+                uiAccountNameComboBox.Text = createUserDlg.UserName;
+                uiPasswordText.Text = createUserDlg.Password;
+            }
+        }
 
         private readonly IUserViewModel _userVm;
     }

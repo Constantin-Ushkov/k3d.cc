@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\k3d.CC.Model.Interface\k3d.CC.Model.Interface.csproj" />
+  </ItemGroup>
+
 </Project>

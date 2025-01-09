@@ -5,7 +5,7 @@ namespace k3d.CC.ViewModel.Impl
 {
     public class ViewModel: IViewModel
     {
-        public ViewModel(IModel model)
+        public ViewModel(IUserViewModel userVm, IModel model)
         {
         }
     }

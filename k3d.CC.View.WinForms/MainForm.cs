@@ -14,14 +14,19 @@ namespace k3d.CC.View.WinForms
             _vmFactory = new ViewModelFactory(new ModelFactory(new DataProvider()));
             _userVm = _vmFactory.CreateUserViewModel();
 
+            _userVm.Error += (sender, args) =>
+            {
+#if DEBUG
+                MessageBox.Show(args.Exception, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+#else
+                MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+#endif
+            };
+
             _userVm.LoggedIn += OnLogin;
             _userVm.LoggedOut += OnLogout;
 
-            _loginForm = new LoginForm(_userVm)
-            {
-                MdiParent = this
-            };
-
+            _loginForm = new LoginDialog(_userVm);
             _todayForm = new TodayForm
             {
                 MdiParent = this
@@ -30,7 +35,7 @@ namespace k3d.CC.View.WinForms
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            _loginForm.Show();
+            _loginForm.ShowDialog();
         }
 
         #region Main Menu Handlers
@@ -39,7 +44,7 @@ namespace k3d.CC.View.WinForms
             => _userVm.Logout();
 
         private void uiLoginMainMenuItem_Click(object sender, EventArgs e)
-            => _loginForm.Show();
+            => _loginForm.ShowDialog();
 
         private void uiTodayMainMenuItem_Click(object sender, EventArgs e)
             => _todayForm.Show();
@@ -48,7 +53,7 @@ namespace k3d.CC.View.WinForms
 
         private void OnLogin(object? sender, EventArgs args)
         {
-            _loginForm.Hide();
+            // _loginForm.Hide();
             _vm = _vmFactory.CreateViewModel(_userVm);
 
             uiLogOutMenuItem.Enabled = true;
@@ -71,7 +76,7 @@ namespace k3d.CC.View.WinForms
         private readonly IViewModelFactory _vmFactory;
         private readonly IUserViewModel _userVm;
         private IViewModel? _vm;
-        private readonly LoginForm _loginForm;
+        private readonly LoginDialog _loginForm;
         private readonly TodayForm _todayForm;
     }
 }

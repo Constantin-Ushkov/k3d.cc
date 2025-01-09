@@ -6,18 +6,14 @@ namespace k3d.CC.ViewModel.Impl
     public class ViewModelFactory: IViewModelFactory
     {
         public ViewModelFactory(IModelFactory modelFactory)
-        {
-            _modelFactory = modelFactory;
-            _model = modelFactory.CreateModel(); // todo: user
-        }
+            => _modelFactory = modelFactory;
 
         public IUserViewModel CreateUserViewModel()
-            => throw new NotImplementedException();
+            => new UserViewModel(_modelFactory);
 
-        public IViewModel CreateViewModel(IUserViewModel user)
-            => new ViewModel(model);
+        public IViewModel CreateViewModel(IUserViewModel userVm)
+            => new ViewModel(userVm, _modelFactory.CreateModel(userVm.GetUser()));
 
         private readonly IModelFactory _modelFactory;
-        private readonly IModel _model;
     }
 }
