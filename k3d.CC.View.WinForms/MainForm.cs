@@ -2,6 +2,7 @@ using k3d.CC.ViewModel.Impl;
 using k3d.CC.ViewModel.Interface;
 using k3d.CC.Model.Impl;
 using k3d.CC.Data.Impl.FS;
+using k3d.Common.Diagnostics;
 
 namespace k3d.CC.View.WinForms
 {
@@ -17,7 +18,7 @@ namespace k3d.CC.View.WinForms
             _userVm.Error += (sender, args) =>
             {
 #if DEBUG
-                MessageBox.Show(args.Exception, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(args.Exception.ToDetailedString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 #else
                 MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 #endif

@@ -10,4 +10,10 @@
     <ProjectReference Include="..\k3d.CC.Model.Interface\k3d.CC.Model.Interface.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="k3d.Common">
+      <HintPath>..\3dparties\k3d.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

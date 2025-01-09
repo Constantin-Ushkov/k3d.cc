@@ -1,5 +1,6 @@
 ﻿using k3d.CC.Model.Interface;
 using k3d.CC.ViewModel.Interface;
+using k3d.Common.Diagnostics;
 
 // todo: logging!
 
@@ -15,7 +16,7 @@ namespace k3d.CC.ViewModel.Impl
 
         public UserViewModel(IModelFactory modelFactory)
         {
-            // todo: assert
+            Assert.Argument.IsNotNull(modelFactory, nameof(modelFactory));
             _modelFactory = modelFactory;
         }
 
@@ -36,7 +37,7 @@ namespace k3d.CC.ViewModel.Impl
             => throw new NotImplementedException();
 
         public IUserModel GetUser()
-            => _user ?? throw new NotImplementedException(); // todo: k3d based exception?
+            => _user ?? throw new ViewModelException("Not logged in.");
 
         public void Login(string name, string password)
         {

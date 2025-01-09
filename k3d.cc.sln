@@ -17,6 +17,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "k3d.CC.Model.Impl", "k3d.CC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "k3d.CC.Model.Interface", "k3d.CC.Model.Interface\k3d.CC.Model.Interface.csproj", "{2CB56FAB-242B-4603-8E73-BAAA02EB4645}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3dparties", "3dparties", "{E28F7B4C-B7FE-4A13-9FDA-D8F37ADFDAC5}"
+	ProjectSection(SolutionItems) = preProject
+		3dparties\k3d.Common.deps.json = 3dparties\k3d.Common.deps.json
+		3dparties\k3d.Common.dll = 3dparties\k3d.Common.dll
+		3dparties\k3d.Common.pdb = 3dparties\k3d.Common.pdb
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
