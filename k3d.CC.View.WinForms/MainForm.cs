@@ -3,6 +3,7 @@ using k3d.CC.ViewModel.Interface;
 using k3d.CC.Model.Impl;
 using k3d.CC.Data.Impl.FS;
 using k3d.Common.Diagnostics;
+using k3d.Logging.Interface;
 
 namespace k3d.CC.View.WinForms
 {
@@ -12,7 +13,13 @@ namespace k3d.CC.View.WinForms
         {
             InitializeComponent();
 
-            _vmFactory = new ViewModelFactory(new ModelFactory(new DataProvider()));
+            _logging = Logging.Impl.Factory.CreateLoggingService();
+
+            var dataFactory = new DataFactory(_logging.Loggers.GetLogger("data", ""));
+            var dataProvider = dataFactory.CreateDataProvider();
+            var modelFactory = new ModelFactory(_logging.Loggers.GetLogger("model", ""), dataProvider);
+
+            _vmFactory = new ViewModelFactory(_logging.Loggers.GetLogger("view-model", ""), modelFactory);
             _userVm = _vmFactory.CreateUserViewModel();
 
             _userVm.Error += (sender, args) =>
@@ -74,6 +81,7 @@ namespace k3d.CC.View.WinForms
             _vm = null;
         }
 
+        private readonly ILoggingService _logging;
         private readonly IViewModelFactory _vmFactory;
         private readonly IUserViewModel _userVm;
         private IViewModel? _vm;

@@ -1,6 +1,6 @@
 ﻿namespace k3d.CC.Data.Interface
 {
-    public interface IModelDataProvider
+    public interface IDataProvider
     {
     }
 }

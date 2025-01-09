@@ -1,12 +1,18 @@
 ﻿using k3d.CC.Data.Interface;
 using k3d.CC.Model.Interface;
+using k3d.Common.Diagnostics;
+using k3d.Logging.Interface;
 
 namespace k3d.CC.Model.Impl
 {
     public class ModelFactory: IModelFactory
     {
-        public ModelFactory(IModelDataProvider dataProvider)
+        public ModelFactory(ILogger log, IDataProvider dataProvider)
         {
+            Assert.Argument.IsNotNull(log, nameof(log));
+            Assert.Argument.IsNotNull(dataProvider, nameof(dataProvider));
+
+            _log = log;
             _dataProvider = dataProvider;
         }
 
@@ -23,6 +29,7 @@ namespace k3d.CC.Model.Impl
             throw new NotImplementedException();
         }
 
-        private IModelDataProvider _dataProvider;
+        private readonly ILogger _log;
+        private readonly IDataProvider _dataProvider;
     }
 }

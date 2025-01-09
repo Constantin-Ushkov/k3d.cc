@@ -5,7 +5,7 @@ namespace k3d.CC.Model.Impl
 {
     public class Model: IModel
     {
-        public Model(IModelDataProvider dataProvider, IUserModel user)
+        public Model(IDataProvider dataProvider, IUserModel user)
         {
             // TODO: assert
 
@@ -14,6 +14,6 @@ namespace k3d.CC.Model.Impl
         }
 
         private readonly IUserModel _user;
-        private readonly IModelDataProvider _dataProvider;
+        private readonly IDataProvider _dataProvider;
     }
 }

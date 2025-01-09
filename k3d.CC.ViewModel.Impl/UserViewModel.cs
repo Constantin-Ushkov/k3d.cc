@@ -1,6 +1,7 @@
 ﻿using k3d.CC.Model.Interface;
 using k3d.CC.ViewModel.Interface;
 using k3d.Common.Diagnostics;
+using k3d.Logging.Interface;
 
 // todo: logging!
 
@@ -14,10 +15,13 @@ namespace k3d.CC.ViewModel.Impl
         public event EventHandler? Changed;
         public event EventHandler<Interface.ErrorEventArgs>? Error;
 
-        public UserViewModel(IModelFactory modelFactory)
+        public UserViewModel(ILogger log, IModelFactory modelFactory)
         {
+            Assert.Argument.IsNotNull(log, nameof(log));
             Assert.Argument.IsNotNull(modelFactory, nameof(modelFactory));
+
             _modelFactory = modelFactory;
+            _log = log;
         }
 
         public void CreateUser(string name, string password1, string password2)
@@ -65,6 +69,7 @@ namespace k3d.CC.ViewModel.Impl
         public void Update(string? newName, string? newPassword1, string? newPassword2)
             => throw new NotImplementedException();
 
+        private readonly ILogger _log;
         private readonly IModelFactory _modelFactory;
         private IUserModel? _user;
     }

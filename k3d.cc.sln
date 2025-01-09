@@ -19,9 +19,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "k3d.CC.Model.Interface", "k
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3dparties", "3dparties", "{E28F7B4C-B7FE-4A13-9FDA-D8F37ADFDAC5}"
 	ProjectSection(SolutionItems) = preProject
-		3dparties\k3d.Common.deps.json = 3dparties\k3d.Common.deps.json
 		3dparties\k3d.Common.dll = 3dparties\k3d.Common.dll
-		3dparties\k3d.Common.pdb = 3dparties\k3d.Common.pdb
+		3dparties\k3d.Logging.Impl.dll = 3dparties\k3d.Logging.Impl.dll
+		3dparties\k3d.Logging.Interface.dll = 3dparties\k3d.Logging.Interface.dll
 	EndProjectSection
 EndProject
 Global

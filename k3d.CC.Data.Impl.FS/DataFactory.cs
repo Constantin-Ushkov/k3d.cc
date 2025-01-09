@@ -4,13 +4,16 @@ using k3d.Logging.Interface;
 
 namespace k3d.CC.Data.Impl.FS
 {
-    internal class DataProvider: IDataProvider
+    public class DataFactory
     {
-        public DataProvider(ILogger log)
+        public DataFactory(ILogger log)
         {
             Assert.Argument.IsNotNull(log, nameof(log));
             _log = log;
         }
+
+        public IDataProvider CreateDataProvider()
+            => new DataProvider(_log);
 
         private readonly ILogger _log;
     }
