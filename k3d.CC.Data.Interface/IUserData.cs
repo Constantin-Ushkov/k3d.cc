@@ -5,7 +5,7 @@ namespace k3d.CC.Data.Interface
     {
         Guid ID { get; }
         string Name { get; set; }
-        string PasswordHash { get; set; }
+        byte[] PasswordHash { get; set; }
 
         void Persist();
     }

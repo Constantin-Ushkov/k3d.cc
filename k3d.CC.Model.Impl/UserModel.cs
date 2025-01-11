@@ -8,7 +8,7 @@ namespace k3d.CC.Model.Impl
     {
         public Guid Id => _data.ID;
         public string Name => _data.Name;
-        public string PasswordHash => _data.PasswordHash;
+        public byte[] PasswordHash => _data.PasswordHash;
 
         public UserModel(IUserData data)
         {
@@ -22,7 +22,7 @@ namespace k3d.CC.Model.Impl
         }
 
         // todo: replace with something none-static
-        public static IUserModel Register(IDataProvider storage, string name, string password1, string password2)
+        public static IUserModel Register(IDataProvider storage, IHashingProvider hasher, string name, string password1, string password2)
         {
             if (storage.GetUser(name) is not null)
             {
@@ -42,14 +42,14 @@ namespace k3d.CC.Model.Impl
             var data = storage.CreateUser();
 
             data.Name = name;
-            data.PasswordHash = hash;
+            data.PasswordHash = hasher.GetHash(password1);
 
             data.Persist();
 
             return new UserModel(data);
         }
 
-        public static IUserModel Login(IDataProvider storage, string name, string password)
+        public static IUserModel Login(IDataProvider storage, IHashingProvider hasher, string name, string password)
         {
             var data = storage.GetUser(name);
 
@@ -58,7 +58,7 @@ namespace k3d.CC.Model.Impl
                 throw new ModelException($"Failed to login. User with name {name} was not found.");
             }
 
-            if (data.PasswordHash != hash)
+            if (!data.PasswordHash.SequenceEqual(hasher.GetHash(password)))
             {
                 throw new ModelException("Failed to login. Password missmatch.");
             }

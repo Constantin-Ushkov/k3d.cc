@@ -5,7 +5,7 @@ namespace k3d.CC.Model.Interface
     {
         Guid Id { get; }
         string Name { get; }
-        string PasswordHash { get; }
+        byte[] PasswordHash { get; }
 
         void Logout();
     }

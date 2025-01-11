@@ -17,7 +17,8 @@ namespace k3d.CC.View.WinForms
 
             var dataFactory = new DataFactory(_logging.Loggers.GetLogger("data", ""));
             var dataProvider = dataFactory.CreateDataProvider();
-            var modelFactory = new ModelFactory(_logging.Loggers.GetLogger("model", ""), dataProvider);
+            var hasher = new SHA256Hasher();
+            var modelFactory = new ModelFactory(_logging.Loggers.GetLogger("model", ""), dataProvider, hasher);
 
             _vmFactory = new ViewModelFactory(_logging.Loggers.GetLogger("view-model", ""), modelFactory);
             _userVm = _vmFactory.CreateUserViewModel();
