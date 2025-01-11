@@ -39,12 +39,12 @@ namespace k3d.CC.View.WinForms
 
         private void uiNewAccountButton_Click(object sender, EventArgs e)
         {
-            var createUserDlg = new CreateUserDialog(_userVm);
+            var registerDlg = new RegisterDialog(_userVm);
 
-            if (createUserDlg.ShowDialog() == DialogResult.OK)
+            if (registerDlg.ShowDialog() == DialogResult.OK)
             {
-                uiAccountNameComboBox.Text = createUserDlg.UserName;
-                uiPasswordText.Text = createUserDlg.Password;
+                uiAccountNameComboBox.Text = registerDlg.UserName;
+                uiPasswordText.Text = registerDlg.Password;
             }
         }
 

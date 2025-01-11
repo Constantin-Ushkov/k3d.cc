@@ -2,5 +2,7 @@
 {
     public interface IDataProvider
     {
+        IUserData CreateUser();
+        IUserData GetUser(string name);
     }
 }

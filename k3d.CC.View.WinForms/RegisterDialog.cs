@@ -2,17 +2,17 @@
 
 namespace k3d.CC.View.WinForms
 {
-    public partial class CreateUserDialog : Form
+    public partial class RegisterDialog : Form
     {
         public string UserName => uiAccountNameTextBox.Text;
         public string Password => uiPasswordTextBox.Text;
 
-        public CreateUserDialog(IUserViewModel userVm)
+        public RegisterDialog(IUserViewModel userVm)
         {
             InitializeComponent();
 
             _userVm = userVm;
-            _userVm.UserCreated += (sender, args) =>
+            _userVm.Registered += (sender, args) =>
             {
                 DialogResult = DialogResult.OK;
             };
@@ -31,7 +31,7 @@ namespace k3d.CC.View.WinForms
         }
 
         private void uiCreateAccountButton_Click(object sender, EventArgs e)
-            => _userVm.CreateUser(
+            => _userVm.Register(
                 uiAccountNameTextBox.Text,
                 uiPasswordTextBox.Text,
                 uiPassword2TextBox.Text);

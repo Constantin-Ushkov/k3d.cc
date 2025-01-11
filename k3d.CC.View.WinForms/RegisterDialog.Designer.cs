@@ -1,6 +1,6 @@
 ﻿namespace k3d.CC.View.WinForms
 {
-    partial class CreateUserDialog
+    partial class RegisterDialog
     {
         /// <summary>
         /// Required designer variable.

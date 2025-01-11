@@ -11,7 +11,7 @@ namespace k3d.CC.ViewModel.Impl
     {
         public event EventHandler? LoggedIn;
         public event EventHandler? LoggedOut;
-        public event EventHandler? UserCreated;
+        public event EventHandler? Registered;
         public event EventHandler? Changed;
         public event EventHandler<Interface.ErrorEventArgs>? Error;
 
@@ -24,12 +24,12 @@ namespace k3d.CC.ViewModel.Impl
             _log = log;
         }
 
-        public void CreateUser(string name, string password1, string password2)
+        public void Register(string name, string password1, string password2)
         {
             try
             {
-                _user = _modelFactory.CreateUser(name, password1, password2);
-                UserCreated?.Invoke(this, EventArgs.Empty);
+                _user = _modelFactory.Register(name, password1, password2);
+                Registered?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception ex)
             {
@@ -47,7 +47,7 @@ namespace k3d.CC.ViewModel.Impl
         {
             try
             {
-                _user = _modelFactory.GetUser(name, password);
+                _user = _modelFactory.Login(name, password);
                 LoggedIn?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception ex)

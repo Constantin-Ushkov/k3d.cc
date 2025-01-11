@@ -19,15 +19,11 @@ namespace k3d.CC.Model.Impl
         public IModel CreateModel(IUserModel user)
             => new Model(_dataProvider, user);
 
-        public IUserModel CreateUser(string name, string password1, string password2)
-        {
-            throw new NotImplementedException();
-        }
+        public IUserModel Register(string name, string password1, string password2)
+            => UserModel.Register(_dataProvider, name, password1, password2);
 
-        public IUserModel GetUser(string name, string password)
-        {
-            throw new NotImplementedException();
-        }
+        public IUserModel Login(string name, string password)
+            => UserModel.Login(_dataProvider, name, password);
 
         private readonly ILogger _log;
         private readonly IDataProvider _dataProvider;
