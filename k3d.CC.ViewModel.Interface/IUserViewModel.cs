@@ -3,7 +3,7 @@ using k3d.CC.Model.Interface;
 
 namespace k3d.CC.ViewModel.Interface
 {
-    public interface IUserViewModel
+    public interface IUserViewModel: IDisposable
     {
         event EventHandler? LoggedIn;
         event EventHandler? LoggedOut;

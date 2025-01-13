@@ -69,6 +69,10 @@ namespace k3d.CC.ViewModel.Impl
         public void Update(string? newName, string? newPassword1, string? newPassword2)
             => throw new NotImplementedException();
 
+        public void Dispose()
+        {
+        }
+
         private readonly ILogger _log;
         private readonly IModelFactory _modelFactory;
         private IUserModel? _user;

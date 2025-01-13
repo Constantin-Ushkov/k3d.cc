@@ -4,6 +4,7 @@ using k3d.CC.Model.Impl;
 using k3d.CC.Data.Impl.FS;
 using k3d.Common.Diagnostics;
 using k3d.Logging.Interface;
+using k3d.CC.Data.Interface;
 
 namespace k3d.CC.View.WinForms
 {
@@ -16,9 +17,10 @@ namespace k3d.CC.View.WinForms
             _logging = Logging.Impl.Factory.CreateLoggingService();
 
             var dataFactory = new DataFactory(_logging.Loggers.GetLogger("data", ""));
-            var dataProvider = dataFactory.CreateDataProvider();
+            _storage = dataFactory.CreateDataProvider();
+
             var hasher = new SHA256Hasher();
-            var modelFactory = new ModelFactory(_logging.Loggers.GetLogger("model", ""), dataProvider, hasher);
+            var modelFactory = new ModelFactory(_logging.Loggers.GetLogger("model", ""), _storage, hasher);
 
             _vmFactory = new ViewModelFactory(_logging.Loggers.GetLogger("view-model", ""), modelFactory);
             _userVm = _vmFactory.CreateUserViewModel();
@@ -45,6 +47,13 @@ namespace k3d.CC.View.WinForms
         private void MainForm_Shown(object sender, EventArgs e)
         {
             _loginForm.ShowDialog();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _vm?.Dispose();
+            _userVm?.Dispose();
+            _storage?.Dispose();
         }
 
         #region Main Menu Handlers
@@ -83,6 +92,7 @@ namespace k3d.CC.View.WinForms
         }
 
         private readonly ILoggingService _logging;
+        private readonly IDataProvider _storage;
         private readonly IViewModelFactory _vmFactory;
         private readonly IUserViewModel _userVm;
         private IViewModel? _vm;

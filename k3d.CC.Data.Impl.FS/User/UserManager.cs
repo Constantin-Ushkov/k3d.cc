@@ -1,21 +1,96 @@
 ﻿using k3d.CC.Data.Interface;
+using k3d.Common.Diagnostics;
+using k3d.Logging.Interface;
 
 namespace k3d.CC.Data.Impl.FS.User
 {
     internal class UserManager : IUserManager
     {
-        public IUserData CreateUser()
+        public UserManager(ILogger log, string baseFolder)
         {
-            throw new NotImplementedException();
+            Assert.Argument.IsNotNull(log, nameof(log));
+            Assert.Argument.IsNotNullOrEmpty(baseFolder, nameof(baseFolder));
+
+            _log = log;
+            _baseFolder = baseFolder;
+        }
+
+        public IUserData CreateUser(string name, byte[] passwordHash)
+        {
+            var user = UserStorage.Create(_baseFolder, name, passwordHash);
+
+            CacheUser(user);
+
+            return user;
         }
 
         public IUserData GetUser(string name)
         {
-            throw new NotImplementedException();
+            var user = GetUserFromCache(name);
+
+            if (user is not null)
+            {
+                return user;
+            }
+
+            user = GetUserFromDisk(name);
+
+            if (user is not null)
+            {
+                CacheUser(user);
+                return user;
+            }
+
+            throw new DataException($"User with name '{name}' was not found.");
         }
 
         public void Dispose()
         {
+            if (_disposed)
+            {
+                return;
+            }
+
+            lock (_usersSyncObject)
+            {
+                foreach (var user in _users.Values)
+                {
+                    user.Dispose();
+                }
+            }
+
+            _disposed = true;
         }
+
+        private IUserStorage? GetUserFromCache(string name)
+        {
+            lock (_usersSyncObject)
+            {
+                return _users.TryGetValue(name, out var user) ? user : null;
+            }
+        }
+
+        private void CacheUser(IUserStorage user)
+        {
+            lock (_usersSyncObject)
+            {
+                if (_users.ContainsKey(user.Name))
+                {
+                    throw new DataException(
+                        $"Failed to cache user. User with name '{user.Name}' is already cached.");
+                }
+
+                _users.Add(user.Name, user);
+            }
+        }
+
+        private IUserStorage GetUserFromDisk(string name)
+            => UserStorage.Open(_baseFolder, name);
+
+        private bool _disposed;
+        private readonly ILogger _log;
+        private readonly string _baseFolder;
+        private readonly object _usersSyncObject = new();
+        private readonly Dictionary<string, IUserStorage> _users = [];
     }
 }

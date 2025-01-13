@@ -82,14 +82,14 @@
             // 
             uiTodayMainMenuItem.Enabled = false;
             uiTodayMainMenuItem.Name = "uiTodayMainMenuItem";
-            uiTodayMainMenuItem.Size = new Size(180, 22);
+            uiTodayMainMenuItem.Size = new Size(105, 22);
             uiTodayMainMenuItem.Text = "&Today";
             uiTodayMainMenuItem.Click += uiTodayMainMenuItem_Click;
             // 
             // uiLoginMainMenuItem
             // 
             uiLoginMainMenuItem.Name = "uiLoginMainMenuItem";
-            uiLoginMainMenuItem.Size = new Size(180, 22);
+            uiLoginMainMenuItem.Size = new Size(105, 22);
             uiLoginMainMenuItem.Text = "&Login";
             uiLoginMainMenuItem.Click += uiLoginMainMenuItem_Click;
             // 
@@ -110,6 +110,7 @@
             MainMenuStrip = uiMainMenuStrip;
             Name = "MainForm";
             Text = "Control Center";
+            FormClosing += MainForm_FormClosing;
             Shown += MainForm_Shown;
             uiMainMenuStrip.ResumeLayout(false);
             uiMainMenuStrip.PerformLayout();

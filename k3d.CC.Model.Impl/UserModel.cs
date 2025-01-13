@@ -39,11 +39,7 @@ namespace k3d.CC.Model.Impl
                 throw new ModelException($"Failed to register. Password missmatch.");
             }
 
-            var data = storage.Users.CreateUser();
-
-            data.Name = name;
-            data.PasswordHash = hasher.GetHash(password1);
-
+            var data = storage.Users.CreateUser(name, hasher.GetHash(password1));
             data.Persist();
 
             return new UserModel(data);

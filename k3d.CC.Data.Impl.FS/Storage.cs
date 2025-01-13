@@ -15,13 +15,15 @@ namespace k3d.CC.Data.Impl.FS
 
         public IUserManager Users { get; }
 
-        public Storage(ILogger log)
+        public Storage(IConfiguration configuration, ILogger log)
         {
+            Assert.Argument.IsNotNull(configuration, nameof(configuration));
             Assert.Argument.IsNotNull(log, nameof(log));
 
+            _configuration = configuration;
             _log = log;
 
-            Users = new UserManager();
+            Users = new UserManager(_log, Path.Combine(_configuration.BaseFolder, Constants.Folders.Users));
         }
 
         public IUserData CreateUser()
@@ -48,5 +50,6 @@ namespace k3d.CC.Data.Impl.FS
 
         private bool _disposed;
         private readonly ILogger _log;
+        private readonly IConfiguration _configuration;
     }
 }

@@ -9,5 +9,9 @@ namespace k3d.CC.ViewModel.Impl
         public ViewModel(ILogger log, IUserViewModel userVm, IModel model)
         {
         }
+
+        public void Dispose()
+        {
+        }
     }
 }
