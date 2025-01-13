@@ -5,6 +5,7 @@ using k3d.CC.Data.Impl.FS;
 using k3d.Common.Diagnostics;
 using k3d.Logging.Interface;
 using k3d.CC.Data.Interface;
+using k3d.CC.View.WinForms.Configuration;
 
 namespace k3d.CC.View.WinForms
 {
@@ -14,9 +15,11 @@ namespace k3d.CC.View.WinForms
         {
             InitializeComponent();
 
+            var config = AppConfig.FromAppConfig();
+
             _logging = Logging.Impl.Factory.CreateLoggingService();
 
-            var dataFactory = new DataFactory(_logging.Loggers.GetLogger("data", ""));
+            var dataFactory = new DataFactory(config.DataConfiguration, _logging.Loggers.GetLogger("data", ""));
             _storage = dataFactory.CreateDataProvider();
 
             var hasher = new SHA256Hasher();
