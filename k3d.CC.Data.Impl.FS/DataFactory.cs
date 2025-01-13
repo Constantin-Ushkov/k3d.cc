@@ -13,7 +13,7 @@ namespace k3d.CC.Data.Impl.FS
         }
 
         public IDataProvider CreateDataProvider()
-            => new DataProvider(_log);
+            => new Storage(_log);
 
         private readonly ILogger _log;
     }

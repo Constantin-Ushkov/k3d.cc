@@ -1,8 +1,7 @@
 ﻿namespace k3d.CC.Data.Interface
 {
-    public interface IDataProvider
+    public interface IDataProvider: IDisposable
     {
-        IUserData CreateUser();
-        IUserData GetUser(string name);
+        IUserDataProvider Users { get; }
     }
 }

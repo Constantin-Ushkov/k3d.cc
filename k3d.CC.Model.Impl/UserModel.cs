@@ -24,7 +24,7 @@ namespace k3d.CC.Model.Impl
         // todo: replace with something none-static
         public static IUserModel Register(IDataProvider storage, IHashingProvider hasher, string name, string password1, string password2)
         {
-            if (storage.GetUser(name) is not null)
+            if (storage.Users.GetUser(name) is not null)
             {
                 throw new ModelException($"Failed to register. User with name {name} is already exists.");
             }
@@ -39,7 +39,7 @@ namespace k3d.CC.Model.Impl
                 throw new ModelException($"Failed to register. Password missmatch.");
             }
 
-            var data = storage.CreateUser();
+            var data = storage.Users.CreateUser();
 
             data.Name = name;
             data.PasswordHash = hasher.GetHash(password1);
@@ -51,7 +51,7 @@ namespace k3d.CC.Model.Impl
 
         public static IUserModel Login(IDataProvider storage, IHashingProvider hasher, string name, string password)
         {
-            var data = storage.GetUser(name);
+            var data = storage.Users.GetUser(name);
 
             if (data is null)
             {
