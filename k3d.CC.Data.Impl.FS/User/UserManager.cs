@@ -15,16 +15,16 @@ namespace k3d.CC.Data.Impl.FS.User
             _baseFolder = baseFolder;
         }
 
-        public IUserData CreateUser(string name, byte[] passwordHash)
+        public IUserData CreateUser(Guid id, string name, byte[] passwordHash)
         {
-            var user = UserStorage.Create(_baseFolder, name, passwordHash);
+            var user = UserStorage.Create(_baseFolder, id, name, passwordHash);
 
             CacheUser(user);
 
             return user;
         }
 
-        public IUserData GetUser(string name)
+        public IUserData? GetUser(string name)
         {
             var user = GetUserFromCache(name);
 
@@ -41,7 +41,7 @@ namespace k3d.CC.Data.Impl.FS.User
                 return user;
             }
 
-            throw new DataException($"User with name '{name}' was not found.");
+            return null;
         }
 
         public void Dispose()
@@ -84,7 +84,7 @@ namespace k3d.CC.Data.Impl.FS.User
             }
         }
 
-        private IUserStorage GetUserFromDisk(string name)
+        private IUserStorage? GetUserFromDisk(string name)
             => UserStorage.Open(_baseFolder, name);
 
         private bool _disposed;
