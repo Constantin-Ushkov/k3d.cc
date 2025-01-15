@@ -38,10 +38,9 @@ namespace k3d.CC.Data.Impl.FS.User
             if (user is not null)
             {
                 CacheUser(user);
-                return user;
             }
 
-            return null;
+            return user;
         }
 
         public void Dispose()

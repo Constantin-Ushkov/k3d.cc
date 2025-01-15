@@ -10,6 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\k3d.CC.Data.Impl.FS\k3d.CC.Data.Impl.FS.csproj" />
     <ProjectReference Include="..\k3d.CC.Data.Interface\k3d.CC.Data.Interface.csproj" />
     <ProjectReference Include="..\k3d.CC.Model.Impl\k3d.CC.Model.Impl.csproj" />

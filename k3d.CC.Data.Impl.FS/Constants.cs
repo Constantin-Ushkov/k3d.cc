@@ -5,7 +5,7 @@ namespace k3d.CC.Data.Impl.FS
     {
         public static class Folders
         {
-            public const string Users = "users";
+            public const string Users = "Users";
         }
     }
 }

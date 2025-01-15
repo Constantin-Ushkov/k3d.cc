@@ -15,7 +15,12 @@ namespace k3d.CC.View.WinForms
         {
             InitializeComponent();
 
-            var config = AppConfig.FromAppConfig();
+            /* debug
+            var tempConfig = AppConfig.CreateDefault();
+            tempConfig.SaveToFile(System.Environment.ProcessPath + ".cfg");
+            */
+
+            var config = AppConfig.FromExeConfigFile();
 
             _logging = Logging.Impl.Factory.CreateLoggingService();
 

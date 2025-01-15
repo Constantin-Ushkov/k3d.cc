@@ -1,24 +1,24 @@
-﻿using System.Configuration;
-using IDataConfiguration = k3d.CC.Data.Impl.FS.IConfiguration;
+﻿using IDataConfiguration = k3d.CC.Data.Impl.FS.IConfiguration;
 
 namespace k3d.CC.View.WinForms.Configuration
 {
     internal class DataConfig : IDataConfiguration
     {
-        private static class Constants
+        public class Dto
         {
-            public const string Prefix = "Data";
-            public const string BaseFolder = "BaseFolder";
+            public string BaseFolder { get; set; } = string.Empty;
+
+            public static Dto CreateDefault()
+                => new Dto();
         }
 
-        public string BaseFolder { get; private set; }
+        public string BaseFolder => _dto.BaseFolder;
 
-        public DataConfig(string baseFolder)
+        public DataConfig(Dto dto)
         {
-            BaseFolder = baseFolder;
+            _dto = dto;
         }
 
-        public static IDataConfiguration FromAppConfig()
-            => new DataConfig(ConfigurationManager.AppSettings[$"{Constants.Prefix}.{Constants.BaseFolder}"]!);
+        private readonly Dto _dto;
     }
 }

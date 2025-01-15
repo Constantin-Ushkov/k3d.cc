@@ -5,5 +5,7 @@ namespace k3d.CC.View.WinForms.Configuration
     internal interface IApplicationConfiguration
     {
         IDataConfiguration DataConfiguration { get; }
+
+        void SaveToFile(string file);
     }
 }
