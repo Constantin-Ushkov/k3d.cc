@@ -66,6 +66,9 @@ namespace k3d.CC.View.WinForms
 
         #region Main Menu Handlers
 
+        private void uiQuitMenuItem_Click(object sender, EventArgs e)
+            => Close();
+
         private void uiLogOutMenuItem_Click(object sender, EventArgs e)
             => _userVm.Logout();
 
@@ -75,6 +78,22 @@ namespace k3d.CC.View.WinForms
         private void uiTodayMainMenuItem_Click(object sender, EventArgs e)
             => _todayForm.Show();
 
+        private void uiUserLoginMenuItem_Click(object sender, EventArgs e)
+            => _loginForm.ShowDialog();
+
+        private void uiUserLogoutMenuItem_Click(object sender, EventArgs e)
+            => _userVm.Logout();
+
+        private void uiUserRenameMenuItem_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void uiUserChangePasswordMenuItem_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion // Main Menu Handlers
 
         private void OnLogin(object? sender, EventArgs args)
@@ -82,13 +101,21 @@ namespace k3d.CC.View.WinForms
             // _loginForm.Hide();
             _vm = _vmFactory.CreateViewModel(_userVm);
 
-            uiLogOutMenuItem.Enabled = true;
+            uiUserLoginMenuItem.Enabled = false;
+            uiUserLogoutMenuItem.Enabled = true;
+            uiUserRenameMenuItem.Enabled = true;
+            uiUserChangePasswordMenuItem.Enabled = true;
+
             uiTodayMainMenuItem.Enabled = true;
         }
 
         private void OnLogout(object? sender, EventArgs args)
         {
-            uiLogOutMenuItem.Enabled = false;
+            uiUserLoginMenuItem.Enabled = true;
+            uiUserLogoutMenuItem.Enabled = false;
+            uiUserRenameMenuItem.Enabled = false;
+            uiUserChangePasswordMenuItem.Enabled = false;
+
             uiTodayMainMenuItem.Enabled = false;
 
             if (_todayForm.Visible)

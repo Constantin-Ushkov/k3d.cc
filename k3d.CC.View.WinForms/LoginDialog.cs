@@ -32,7 +32,7 @@ namespace k3d.CC.View.WinForms
         }
 
         private void uiLoginButton_Click(object sender, EventArgs e)
-            => _userVm.Login(uiAccountNameComboBox.SelectedText, uiPasswordText.Text);
+            => _userVm.Login(uiAccountNameComboBox.Text, uiPasswordText.Text);
 
         private void uiCancelButton_Click(object sender, EventArgs e)
             => Hide();
