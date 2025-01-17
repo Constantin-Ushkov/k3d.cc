@@ -7,7 +7,7 @@ namespace k3d.CC.ViewModel.Interface
     {
         event EventHandler? LoggedIn;
         event EventHandler? LoggedOut;
-        event EventHandler? Changed;
+        event EventHandler<UserModelChangedEventArgs>? Changed;
         event EventHandler? Registered;
         event EventHandler<ErrorEventArgs>? Error;
 
@@ -17,7 +17,8 @@ namespace k3d.CC.ViewModel.Interface
         void Login(string name, string password);
         void Logout();
 
+        void Rename(string newName, string password);
+        void ChangePassword(string currentPassword, string newPassword, string newPasswordRepeat);
         void Delete();
-        void Update(string? newName, string? newPassword1, string? newPassword2);
     }
 }

@@ -33,6 +33,44 @@ namespace k3d.CC.Data.Impl.FS.User
         public void Persist()
             => _dto.WriteToFile();
 
+        public void Rename(string newName)
+        {
+            if (newName == _dto.Name)
+            {
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(newName))
+            {
+                throw new DataException("Failed to rename user. Name should not be empty string.");
+            }
+
+            var currentFolderPath = Path.GetDirectoryName(_dto.File);
+            var newFolderName = UserNameToFolder(newName);
+            var newFolderPath = Path.Combine(Path.GetDirectoryName(currentFolderPath)!, newFolderName);
+
+            if (Directory.Exists(currentFolderPath))
+            {
+                if (Directory.Exists(newFolderPath))
+                {
+                    throw new DataException($"Failed to rename user ({_dto.Name} => {newName}). User with this name is already exists.");
+                }
+                else
+                {
+                    Directory.Move(currentFolderPath, newFolderPath);
+                }
+            }
+            else
+            {
+                Directory.CreateDirectory(newFolderPath);
+            }
+
+
+            _dto.Name = newName;
+            _dto.File = Path.Combine(newFolderPath, Constants.UserFileName);
+            _dto.WriteToFile();
+        }
+
         public void Dispose()
         {
         }

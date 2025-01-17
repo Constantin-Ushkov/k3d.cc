@@ -12,7 +12,7 @@ namespace k3d.CC.ViewModel.Impl
         public event EventHandler? LoggedIn;
         public event EventHandler? LoggedOut;
         public event EventHandler? Registered;
-        public event EventHandler? Changed;
+        public event EventHandler<UserModelChangedEventArgs>? Changed;
         public event EventHandler<Interface.ErrorEventArgs>? Error;
 
         public UserViewModel(ILogger log, IModelFactory modelFactory)
@@ -29,6 +29,8 @@ namespace k3d.CC.ViewModel.Impl
             try
             {
                 _user = _modelFactory.Register(name, password1, password2);
+                _user.Changed += (sender, args) => Changed?.Invoke(this, args);
+
                 Registered?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception ex)
@@ -48,6 +50,8 @@ namespace k3d.CC.ViewModel.Impl
             try
             {
                 _user = _modelFactory.Login(name, password);
+                _user.Changed += (sender, args) => Changed?.Invoke(this, args);
+
                 LoggedIn?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception ex)
@@ -66,8 +70,11 @@ namespace k3d.CC.ViewModel.Impl
             LoggedOut?.Invoke(this, EventArgs.Empty);
         }
 
-        public void Update(string? newName, string? newPassword1, string? newPassword2)
-            => throw new NotImplementedException();
+        public void Rename(string newName, string password)
+            => _user?.Rename(newName, password);
+
+        public void ChangePassword(string currentPassword, string newPassword, string newPasswordRepeat)
+            => _user?.ChangePassword(newPassword, newPasswordRepeat, currentPassword);
 
         public void Dispose()
         {
