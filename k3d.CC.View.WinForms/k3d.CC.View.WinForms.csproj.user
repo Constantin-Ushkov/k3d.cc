@@ -10,6 +10,9 @@
     <Compile Update="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="RenameUserDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="TodayForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -4,5 +4,6 @@ namespace k3d.CC.Data.Impl.FS.User
 {
     internal interface IUserStorage: IUserData, IDisposable
     {
+        event EventHandler<NameChangedEventArgs>? NameChanged;
     }
 }

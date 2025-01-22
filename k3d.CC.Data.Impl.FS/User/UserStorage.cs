@@ -10,6 +10,8 @@ namespace k3d.CC.Data.Impl.FS.User
             public const string UserFileName = "user";
         }
 
+        public event EventHandler<NameChangedEventArgs>? NameChanged;
+
         public Guid ID => _dto.Id;
 
         public string Name
@@ -65,10 +67,13 @@ namespace k3d.CC.Data.Impl.FS.User
                 Directory.CreateDirectory(newFolderPath);
             }
 
+            var oldName = _dto.Name;
 
             _dto.Name = newName;
             _dto.File = Path.Combine(newFolderPath, Constants.UserFileName);
             _dto.WriteToFile();
+
+            NameChanged?.Invoke(this, new NameChangedEventArgs(this, oldName));
         }
 
         public void Dispose()

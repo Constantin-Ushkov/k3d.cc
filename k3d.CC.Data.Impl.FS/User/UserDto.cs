@@ -40,8 +40,12 @@ namespace k3d.CC.Data.Impl.FS.User
         {
             var json = System.IO.File.ReadAllText(file);
 
-            return JsonSerializer.Deserialize<UserDto>(json)
+            var dto = JsonSerializer.Deserialize<UserDto>(json)
                 ?? throw new DataException($"Failed to deserialize {nameof(UserDto)}.");
+
+            dto.File = file;
+
+            return dto;
         }
     }
 }

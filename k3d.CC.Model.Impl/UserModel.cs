@@ -100,7 +100,7 @@ namespace k3d.CC.Model.Impl
             var data = storage.Users.CreateUser(Guid.NewGuid(), name, hasher.GetHash(password1));
             data.Persist();
 
-            return new UserModel(data);
+            return new UserModel(data, hasher);
         }
 
         public static IUserModel Login(IDataProvider storage, IHashingProvider hasher, string name, string password)
@@ -117,7 +117,7 @@ namespace k3d.CC.Model.Impl
                 throw new ModelException("Failed to login. Password missmatch.");
             }
 
-            return new UserModel(data);
+            return new UserModel(data, hasher);
         }
 
         private readonly IUserData _data;

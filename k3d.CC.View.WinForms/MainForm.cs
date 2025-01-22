@@ -85,9 +85,7 @@ namespace k3d.CC.View.WinForms
             => _userVm.Logout();
 
         private void uiUserRenameMenuItem_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+            => new RenameUserDialog(_userVm).ShowDialog();
 
         private void uiUserChangePasswordMenuItem_Click(object sender, EventArgs e)
         {

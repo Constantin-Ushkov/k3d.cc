@@ -79,6 +79,15 @@ namespace k3d.CC.Data.Impl.FS.User
                         $"Failed to cache user. User with name '{user.Name}' is already cached.");
                 }
 
+                user.NameChanged += (sender, args) =>
+                {
+                    lock (_usersSyncObject)
+                    {
+                        _users.Remove(args.OldName);
+                        _users.Add(user.Name, user);
+                    }
+                };
+
                 _users.Add(user.Name, user);
             }
         }
