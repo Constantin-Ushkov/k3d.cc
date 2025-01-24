@@ -2,7 +2,7 @@
 
 namespace k3d.CC.View.WinForms.Configuration
 {
-    internal interface IApplicationConfiguration
+    public interface IApplicationConfiguration
     {
         IDataConfiguration DataConfiguration { get; }
 

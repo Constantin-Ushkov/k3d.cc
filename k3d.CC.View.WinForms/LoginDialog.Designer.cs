@@ -53,6 +53,7 @@
             // 
             // uiDataLocationText
             // 
+            uiDataLocationText.Enabled = false;
             uiDataLocationText.Location = new Point(12, 27);
             uiDataLocationText.Name = "uiDataLocationText";
             uiDataLocationText.Size = new Size(286, 23);
@@ -60,6 +61,7 @@
             // 
             // uiBrowseDataLocationButton
             // 
+            uiBrowseDataLocationButton.Enabled = false;
             uiBrowseDataLocationButton.Location = new Point(304, 26);
             uiBrowseDataLocationButton.Name = "uiBrowseDataLocationButton";
             uiBrowseDataLocationButton.Size = new Size(24, 23);
@@ -163,9 +165,10 @@
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "LoginDialog";
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Logging in...";
             FormClosing += LoginForm_FormClosing;
+            Shown += LoginDialog_Shown;
             ResumeLayout(false);
             PerformLayout();
         }

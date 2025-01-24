@@ -1,12 +1,19 @@
-﻿using k3d.CC.ViewModel.Interface;
+﻿using k3d.CC.View.WinForms.Configuration;
+using k3d.CC.ViewModel.Interface;
+using k3d.Common.Diagnostics;
 
 namespace k3d.CC.View.WinForms
 {
     public partial class LoginDialog : Form
     {
-        public LoginDialog(IUserViewModel userVm)
+        public LoginDialog(IApplicationConfiguration config, IUserViewModel userVm)
         {
+            Assert.Argument.IsNotNull(config, nameof(config));
+            Assert.Argument.IsNotNull(userVm, nameof(userVm));
+
             InitializeComponent();
+
+            _config = config;
             _userVm = userVm;
 
             // todo: general logging (to display in main form)
@@ -16,6 +23,9 @@ namespace k3d.CC.View.WinForms
                 DialogResult = DialogResult.OK;
             };
         }
+
+        private void LoginDialog_Shown(object sender, EventArgs e)
+            => uiDataLocationText.Text = _config.DataConfiguration.BaseFolder;
 
         private void uiBrowseDataLocationButton_Click(object sender, EventArgs e)
         {
@@ -54,6 +64,7 @@ namespace k3d.CC.View.WinForms
         private void uiShowPasswordButton_MouseUp(object sender, MouseEventArgs e)
             => uiPasswordText.PasswordChar = '*';
 
+        private readonly IApplicationConfiguration _config;
         private readonly IUserViewModel _userVm;
     }
 }

@@ -25,11 +25,10 @@ namespace k3d.CC.View.WinForms
             tempConfig.SaveToFile(System.Environment.ProcessPath + ".cfg");
             */
 
-            var config = AppConfig.FromExeConfigFile();
-
+            _config = AppConfig.FromExeConfigFile();
             _logging = Logging.Impl.Factory.CreateLoggingService();
 
-            var dataFactory = new DataFactory(config.DataConfiguration, _logging.Loggers.GetLogger("data", ""));
+            var dataFactory = new DataFactory(_config.DataConfiguration, _logging.Loggers.GetLogger("data", ""));
             _storage = dataFactory.CreateDataProvider();
 
             var hasher = new SHA256Hasher();
@@ -50,7 +49,7 @@ namespace k3d.CC.View.WinForms
             _userVm.LoggedIn += OnLogin;
             _userVm.LoggedOut += OnLogout;
 
-            _loginForm = new LoginDialog(_userVm);
+            _loginForm = new LoginDialog(_config, _userVm);
             _todayForm = new TodayForm
             {
                 MdiParent = this
@@ -132,6 +131,7 @@ namespace k3d.CC.View.WinForms
             _vm = null;
         }
 
+        private readonly IApplicationConfiguration _config;
         private readonly ILoggingService _logging;
         private readonly IDataProvider _storage;
         private readonly IViewModelFactory _vmFactory;

@@ -119,7 +119,7 @@
             uiCancelButton.Text = "Cancel";
             uiCancelButton.UseVisualStyleBackColor = true;
             // 
-            // CreateAccountForm
+            // RegisterDialog
             // 
             AcceptButton = uiCreateAccountButton;
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -136,8 +136,8 @@
             Controls.Add(label1);
             Controls.Add(uiAccountNameTextBox);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
-            Name = "CreateAccountForm";
-            StartPosition = FormStartPosition.CenterScreen;
+            Name = "RegisterDialog";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Create Account";
             ResumeLayout(false);
             PerformLayout();
