@@ -92,9 +92,7 @@ namespace k3d.CC.View.WinForms
             => new RenameUserDialog(_userVm).ShowDialog();
 
         private void uiUserChangePasswordMenuItem_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+            => new ChangePasswordDialog(_userVm).ShowDialog();
 
         #endregion // Main Menu Handlers
 
