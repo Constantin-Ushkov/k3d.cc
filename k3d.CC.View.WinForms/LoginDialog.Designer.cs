@@ -39,6 +39,7 @@
             uiCancelButton = new Button();
             uiNewAccountButton = new Button();
             uiDataLocationFolderDialog = new FolderBrowserDialog();
+            uiShowPasswordButton = new Button();
             SuspendLayout();
             // 
             // label1
@@ -97,12 +98,13 @@
             // 
             uiPasswordText.Location = new Point(12, 116);
             uiPasswordText.Name = "uiPasswordText";
+            uiPasswordText.PasswordChar = '*';
             uiPasswordText.Size = new Size(156, 23);
             uiPasswordText.TabIndex = 6;
             // 
             // uiLoginButton
             // 
-            uiLoginButton.Location = new Point(206, 115);
+            uiLoginButton.Location = new Point(206, 145);
             uiLoginButton.Name = "uiLoginButton";
             uiLoginButton.Size = new Size(122, 23);
             uiLoginButton.TabIndex = 7;
@@ -112,7 +114,7 @@
             // 
             // uiCancelButton
             // 
-            uiCancelButton.Location = new Point(206, 86);
+            uiCancelButton.Location = new Point(206, 116);
             uiCancelButton.Name = "uiCancelButton";
             uiCancelButton.Size = new Size(122, 23);
             uiCancelButton.TabIndex = 8;
@@ -122,7 +124,7 @@
             // 
             // uiNewAccountButton
             // 
-            uiNewAccountButton.Location = new Point(206, 58);
+            uiNewAccountButton.Location = new Point(206, 88);
             uiNewAccountButton.Name = "uiNewAccountButton";
             uiNewAccountButton.Size = new Size(122, 23);
             uiNewAccountButton.TabIndex = 9;
@@ -130,13 +132,25 @@
             uiNewAccountButton.UseVisualStyleBackColor = true;
             uiNewAccountButton.Click += uiNewAccountButton_Click;
             // 
-            // LoginForm
+            // uiShowPasswordButton
+            // 
+            uiShowPasswordButton.Location = new Point(12, 145);
+            uiShowPasswordButton.Name = "uiShowPasswordButton";
+            uiShowPasswordButton.Size = new Size(156, 23);
+            uiShowPasswordButton.TabIndex = 10;
+            uiShowPasswordButton.Text = "Show Password";
+            uiShowPasswordButton.UseVisualStyleBackColor = true;
+            uiShowPasswordButton.MouseDown += uiShowPasswordButton_MouseDown;
+            uiShowPasswordButton.MouseUp += uiShowPasswordButton_MouseUp;
+            // 
+            // LoginDialog
             // 
             AcceptButton = uiLoginButton;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             CancelButton = uiCancelButton;
-            ClientSize = new Size(340, 152);
+            ClientSize = new Size(340, 178);
+            Controls.Add(uiShowPasswordButton);
             Controls.Add(uiNewAccountButton);
             Controls.Add(uiCancelButton);
             Controls.Add(uiLoginButton);
@@ -148,7 +162,7 @@
             Controls.Add(uiDataLocationText);
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
-            Name = "LoginForm";
+            Name = "LoginDialog";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Logging in...";
             FormClosing += LoginForm_FormClosing;
@@ -169,5 +183,6 @@
         private Button uiCancelButton;
         private Button uiNewAccountButton;
         private FolderBrowserDialog uiDataLocationFolderDialog;
+        private Button uiShowPasswordButton;
     }
 }

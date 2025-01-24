@@ -48,6 +48,12 @@ namespace k3d.CC.View.WinForms
             }
         }
 
+        private void uiShowPasswordButton_MouseDown(object sender, MouseEventArgs e)
+            => uiPasswordText.PasswordChar = '\0';
+
+        private void uiShowPasswordButton_MouseUp(object sender, MouseEventArgs e)
+            => uiPasswordText.PasswordChar = '*';
+
         private readonly IUserViewModel _userVm;
     }
 }

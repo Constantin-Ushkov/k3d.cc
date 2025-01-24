@@ -11,6 +11,11 @@ namespace k3d.CC.View.WinForms
 {
     public partial class MainForm : Form
     {
+        private static class Constants
+        {
+            public const string Title = "Control Center";
+        }
+
         public MainForm()
         {
             InitializeComponent();
@@ -96,7 +101,8 @@ namespace k3d.CC.View.WinForms
 
         private void OnLogin(object? sender, EventArgs args)
         {
-            // _loginForm.Hide();
+            Text = $"{Constants.Title} - {_userVm.GetUser().Name}";
+
             _vm = _vmFactory.CreateViewModel(_userVm);
 
             uiUserLoginMenuItem.Enabled = false;
@@ -109,6 +115,8 @@ namespace k3d.CC.View.WinForms
 
         private void OnLogout(object? sender, EventArgs args)
         {
+            Text = Constants.Title;
+
             uiUserLoginMenuItem.Enabled = true;
             uiUserLogoutMenuItem.Enabled = false;
             uiUserRenameMenuItem.Enabled = false;
