@@ -6,6 +6,11 @@ namespace k3d.CC.View.WinForms
 {
     public partial class LoginDialog : Form
     {
+        public LoginDialog(ILoginView? viewModel)
+        {
+            InitializeComponent();
+        }
+
         public LoginDialog(IApplicationConfiguration config, IUserViewModel userVm)
         {
             Assert.Argument.IsNotNull(config, nameof(config));

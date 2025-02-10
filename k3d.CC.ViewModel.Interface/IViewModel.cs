@@ -2,5 +2,6 @@
 {
     public interface IViewModel: IDisposable
     {
+        // SetPosition(x, y); // for persist\restore
     }
 }

@@ -6,6 +6,7 @@ using k3d.Common.Diagnostics;
 using k3d.Logging.Interface;
 using k3d.CC.Data.Interface;
 using k3d.CC.View.WinForms.Configuration;
+using k3d.CC.ViewModel.Interface.MainView;
 
 namespace k3d.CC.View.WinForms
 {
@@ -16,15 +17,28 @@ namespace k3d.CC.View.WinForms
             public const string Title = "Control Center";
         }
 
-        public MainForm()
+        public MainForm(IMainView viewModel)
         {
-            InitializeComponent();
-
             /* debug
             var tempConfig = AppConfig.CreateDefault();
             tempConfig.SaveToFile(System.Environment.ProcessPath + ".cfg");
             */
 
+            _viewModel = viewModel;
+
+            _viewModel.ShowView += OnShowView;
+            _viewModel.ShowModalView += OnShowViewModal;
+
+            InitializeComponent();
+
+            _viewModel.LoggedIn += OnLogin;
+            _viewModel.LoggedOut += OnLogout;
+            _viewModel.Error += OnError;
+
+            _viewModel.QuitAction.IsEnabled.Changed += OnQuitActionEnabledChanged;
+            _viewModel.LogOutAction.IsEnabled.Changed += OnLogoutActionEnabledChanged;
+
+            /*
             _config = AppConfig.FromExeConfigFile();
             _logging = Logging.Impl.Factory.CreateLoggingService();
 
@@ -54,18 +68,63 @@ namespace k3d.CC.View.WinForms
             {
                 MdiParent = this
             };
+            */
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            _loginForm.ShowDialog();
+            _viewModel.OnShown(); // _loginForm.ShowDialog();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            /*
             _vm?.Dispose();
             _userVm?.Dispose();
             _storage?.Dispose();
+            */
+            _viewModel.OnClosing();
+        }
+
+        private void OnLogoutActionEnabledChanged(object? sender, ActivePropertyChangedEventArgs<bool> e)
+            => uiUserLogoutMenuItem.Enabled = e.Property.Value;
+
+        private void OnQuitActionEnabledChanged(object? sender, ActivePropertyChangedEventArgs<bool> e)
+            => uiQuitMenuItem.Enabled = e.Property.Value;
+
+        private void OnError(object? sender, ViewModel.Interface.ErrorEventArgs args)
+        {
+#if DEBUG
+            MessageBox.Show(args.Exception.ToDetailedString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+#else
+            MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+#endif
+        }
+
+        private void OnShowView(object? sender, ShowViewEventArgs e)
+        {
+            if (_showViewActions.TryGetValue(e.ViewModel.ViewType, out var presenter))
+            {
+                presenter?.Invoke(e.ViewModel);
+            }
+            else
+            {
+                _viewModel.ReportError(
+                    $"No view is registered to show for {e.ViewModel.ViewType} view-model type.");
+            }
+        }
+
+        private void OnShowViewModal(object? sender, ShowViewEventArgs e)
+        {
+            if (_showModalViewActions.TryGetValue(e.ViewModel.ViewType, out var presenter))
+            {
+                presenter?.Invoke(e.ViewModel);
+            }
+            else
+            {
+                _viewModel.ReportError(
+                    $"No view is registered to show modal for {e.ViewModel.ViewType} view-model type.");
+            }
         }
 
         #region Main Menu Handlers
@@ -128,6 +187,12 @@ namespace k3d.CC.View.WinForms
 
             _vm = null;
         }
+
+        private readonly IMainView _viewModel;
+        private readonly Dictionary<ViewType, Action<IViewModel2?>> _showViewActions = [];
+        private readonly Dictionary<ViewType, Action<IViewModel2?>> _showModalViewActions = new() {
+            {ViewType.Login, viewModel => { new LoginDialog(viewModel as ILoginView).ShowDialog(); }}
+        };
 
         private readonly IApplicationConfiguration _config;
         private readonly ILoggingService _logging;
