@@ -5,7 +5,6 @@ namespace k3d.CC.ViewModel.Interface
     {
         event EventHandler<ActivePropertyChangedEventArgs<T>> Changed;
 
-        T Value { get; set; }
-        bool IsReadOnly { get; }
+        T Value { get; }
     }
 }

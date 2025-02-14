@@ -2,8 +2,7 @@
 
 namespace k3d.CC.ViewModel.Impl
 {
-    internal interface IParameterLessViewActionInternal: IParameterLessViewAction
+    internal interface IParameterLessViewActionInternal: IParameterLessViewAction, IViewActionInternal
     {
-        void Enable(bool enabled);
     }
 }

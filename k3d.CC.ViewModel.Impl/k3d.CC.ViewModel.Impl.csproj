@@ -20,4 +20,9 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="LoginView\" />
+    <Folder Include="RegisterView\" />
+  </ItemGroup>
+
 </Project>

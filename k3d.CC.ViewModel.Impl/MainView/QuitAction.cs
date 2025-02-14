@@ -2,13 +2,19 @@
 
 namespace k3d.CC.ViewModel.Impl.MainView
 {
-    internal class QuitAction : IParameterLessViewActionInternal
+    internal class QuitAction : MainViewAction, IParameterLessViewActionInternal
     {
-        public IActiveProperty<bool> IsEnabled => throw new NotImplementedException();
+        public QuitAction(IViewModelFactoryInternal factory, IMainViewInternal view)
+            : base(factory, view)
+        {
+        }
 
         public void Enable(bool enabled)
         {
-            throw new NotImplementedException();
+            IsEnabled.Value = enabled; // todo: fix me!
         }
+
+        public void Invoke()
+            => _view.Quit();
     }
 }

@@ -6,11 +6,11 @@ namespace k3d.CC.ViewModel.Impl
     {
         public abstract ViewType ViewType { get; }
 
-        public void OnClosing()
+        public virtual void OnClosing()
         {
         }
 
-        public void OnShown()
+        public virtual void OnShown()
         {
         }
     }

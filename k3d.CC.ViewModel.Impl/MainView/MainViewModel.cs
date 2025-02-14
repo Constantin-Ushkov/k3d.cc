@@ -1,5 +1,6 @@
 ﻿using k3d.CC.ViewModel.Interface;
 using k3d.CC.ViewModel.Interface.MainView;
+using k3d.Common.Diagnostics;
 
 namespace k3d.CC.ViewModel.Impl.MainView
 {
@@ -16,9 +17,23 @@ namespace k3d.CC.ViewModel.Impl.MainView
         public IParameterLessViewAction LogOutAction => _logoutAction;
         public IParameterLessViewAction QuitAction => _quitAction;
 
-        public MainViewModel()
+        public MainViewModel(IViewModelFactoryInternal factory)
         {
-            // _logoutAction = _factory.Actions.CreateMainViewLogoutAction();
+            Assert.Argument.IsNotNull(factory, nameof(factory));
+
+            _factory = factory;
+            _logoutAction = _factory.CreateLogoutAction();
+            _quitAction = _factory.CreateQuitAction();
+        }
+
+        public override void OnShown()
+        {
+            base.OnShown();
+        }
+
+        public override void OnClosing()
+        {
+            base.OnClosing();
         }
 
         public void ReportError(string message, Exception exception = null)
@@ -29,6 +44,7 @@ namespace k3d.CC.ViewModel.Impl.MainView
             throw new NotImplementedException();
         }
 
+        private readonly IViewModelFactoryInternal _factory;
         private readonly IParameterLessViewActionInternal _logoutAction;
         private readonly IParameterLessViewActionInternal _quitAction;
     }
