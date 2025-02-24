@@ -1,6 +1,6 @@
 ﻿using k3d.Common.Diagnostics;
 
-namespace k3d.CC.ViewModel.Impl.MainView
+namespace k3d.CC.ViewModel.Impl.MainView.Actions
 {
     internal class MainViewAction : ViewModelAction
     {

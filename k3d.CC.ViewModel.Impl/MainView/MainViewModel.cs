@@ -1,14 +1,12 @@
-﻿using k3d.CC.ViewModel.Interface;
-using k3d.CC.ViewModel.Interface.MainView;
+﻿using k3d.CC.ViewModel.Impl.LoginView;
+using k3d.CC.ViewModel.Interface;
 using k3d.Common.Diagnostics;
 
 namespace k3d.CC.ViewModel.Impl.MainView
 {
-    internal class MainViewModel : ViewModel2, IMainView
+    internal class MainViewModel : ViewModel2, IMainViewInternal
     {
         public event EventHandler<Interface.ErrorEventArgs>? Error;
-        public event EventHandler<ShowViewEventArgs>? ShowView;
-        public event EventHandler<ShowViewEventArgs>? ShowModalView;
         public event EventHandler? LoggedIn;
         public event EventHandler? LoggedOut;
 
@@ -22,13 +20,22 @@ namespace k3d.CC.ViewModel.Impl.MainView
             Assert.Argument.IsNotNull(factory, nameof(factory));
 
             _factory = factory;
+            _viewModels = _factory.CreateViewModelCollection();
             _logoutAction = _factory.CreateLogoutAction();
             _quitAction = _factory.CreateQuitAction();
+
+            // _views.RegisterSingleton<ILoginView>();
         }
 
         public override void OnShown()
         {
             base.OnShown();
+
+            // todo: show login view
+            // ShowModalView(_views.Get<ILoginView>());
+            // 
+
+            DisplayModalView(_viewModels.GetModel<ILoginViewModelInternal>());
         }
 
         public override void OnClosing()
@@ -36,16 +43,26 @@ namespace k3d.CC.ViewModel.Impl.MainView
             base.OnClosing();
         }
 
-        public void ReportError(string message, Exception exception = null)
+        public void ReportError(string message, Exception? exception = null)
         {
-            // _errorLogView.AddError(message, exception);
-            // Error?.Invoke(this, args);
+            // todo: _errorLogView.AddError(message, exception);
+            Error?.Invoke(this, new Interface.ErrorEventArgs(message, exception));
+        }
 
+        void IMainViewInternal.Quit()
+        {
+            throw new NotImplementedException();
+        }
+
+        void IMainViewInternal.Logout()
+        {
+            // _userModel.Logout();
             throw new NotImplementedException();
         }
 
         private readonly IViewModelFactoryInternal _factory;
         private readonly IParameterLessViewActionInternal _logoutAction;
         private readonly IParameterLessViewActionInternal _quitAction;
+        private readonly IViewModelCollection _viewModels;
     }
 }

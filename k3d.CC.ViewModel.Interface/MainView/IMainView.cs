@@ -14,6 +14,6 @@
         // IParameterLessViewAction ShowRenameUserDialogAction { get; } - just ShowView
         // IParameterLessViewAction ShowChangePasswordDialogAction { get; } - just ShowView
 
-        void ReportError(string message, Exception exception = null);
+        void ReportError(string message, Exception? exception = null);
     }
 }

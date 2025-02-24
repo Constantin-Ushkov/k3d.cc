@@ -8,5 +8,7 @@ namespace k3d.CC.ViewModel.Impl
 
         IParameterLessViewActionInternal CreateLogoutAction();
         IParameterLessViewActionInternal CreateQuitAction();
+
+        IViewModelCollection CreateViewModelCollection();
     }
 }

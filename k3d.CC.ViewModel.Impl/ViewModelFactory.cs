@@ -4,6 +4,7 @@ using k3d.Logging.Interface;
 using k3d.Common.Diagnostics;
 using k3d.CC.ViewModel.Interface.MainView;
 using k3d.CC.ViewModel.Impl.MainView;
+using k3d.CC.ViewModel.Impl.MainView.Actions;
 
 namespace k3d.CC.ViewModel.Impl
 {
@@ -25,19 +26,26 @@ namespace k3d.CC.ViewModel.Impl
             => new ViewModel(_log, userVm, _modelFactory.CreateModel(userVm.GetUser()));
 
         public IMainView CreateMainView()
-            => new MainViewModel(this);
+        {
+            _mainView ??= new MainViewModel(this);
+            return _mainView;
+        }
 
         //
         // Explicit Implementation
         //
 
         IParameterLessViewActionInternal IViewModelFactoryInternal.CreateLogoutAction()
-            => new LogoutAction();
+            => new LogoutAction(_mainView);
 
         IParameterLessViewActionInternal IViewModelFactoryInternal.CreateQuitAction()
-            => new QuitAction();
+            => new QuitAction(this, _mainView);
+
+        IViewModelCollection IViewModelFactoryInternal.CreateViewModelCollection()
+            => throw new NotImplementedException();
 
         private readonly ILogger _log;
         private readonly IModelFactory _modelFactory;
+        private IMainViewInternal _mainView;
     }
 }
