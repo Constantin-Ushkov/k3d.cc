@@ -1,7 +1,4 @@
-using k3d.CC.ViewModel.Impl;
 using k3d.CC.ViewModel.Interface;
-using k3d.CC.Model.Impl;
-using k3d.CC.Data.Impl.FS;
 using k3d.Common.Diagnostics;
 using k3d.Logging.Interface;
 using k3d.CC.Data.Interface;

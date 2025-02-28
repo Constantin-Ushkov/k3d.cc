@@ -20,11 +20,13 @@ namespace k3d.CC.ViewModel.Impl.MainView
             Assert.Argument.IsNotNull(factory, nameof(factory));
 
             _factory = factory;
+
             _viewModels = _factory.CreateViewModelCollection();
             _logoutAction = _factory.CreateLogoutAction();
             _quitAction = _factory.CreateQuitAction();
 
-            // _views.RegisterSingleton<ILoginView>();
+            // todo: allso add this\main view?
+            _viewModels.AddSingleton(_factory.CreateLoginViewModel());
         }
 
         public override void OnShown()
@@ -35,6 +37,7 @@ namespace k3d.CC.ViewModel.Impl.MainView
             // ShowModalView(_views.Get<ILoginView>());
             // 
 
+            // todo: how to make this global?
             DisplayModalView(_viewModels.GetModel<ILoginViewModelInternal>());
         }
 

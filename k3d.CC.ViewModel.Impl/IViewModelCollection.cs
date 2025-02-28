@@ -4,9 +4,11 @@ namespace k3d.CC.ViewModel.Impl
 {
     internal interface IViewModelCollection
     {
-        void AddModel<T>(T viewModel) where T : IViewModel2;
-        void AddModelFactory<T>(Func<T> factory) where T : IViewModel2;
+        IEnumerable<IViewModelInternal> ActiveViews { get; }
 
-        T GetModel<T>() where T : IViewModel2;
+        void AddSingleton<T>(T viewModel) where T : class, IViewModelInternal;
+        void AddFactory<T>(Func<IViewModelInternal> factory) where T : class, IViewModelInternal;
+
+        T GetModel<T>() where T : class, IViewModelInternal;
     }
 }

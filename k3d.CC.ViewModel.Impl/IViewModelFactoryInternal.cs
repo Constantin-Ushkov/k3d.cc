@@ -1,4 +1,5 @@
-﻿using k3d.CC.ViewModel.Interface;
+﻿using k3d.CC.ViewModel.Impl.LoginView;
+using k3d.CC.ViewModel.Interface;
 
 namespace k3d.CC.ViewModel.Impl
 {
@@ -10,5 +11,7 @@ namespace k3d.CC.ViewModel.Impl
         IParameterLessViewActionInternal CreateQuitAction();
 
         IViewModelCollection CreateViewModelCollection();
+
+        ILoginViewModelInternal CreateLoginViewModel();
     }
 }

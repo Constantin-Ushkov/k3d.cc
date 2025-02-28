@@ -5,6 +5,7 @@ using k3d.Common.Diagnostics;
 using k3d.CC.ViewModel.Interface.MainView;
 using k3d.CC.ViewModel.Impl.MainView;
 using k3d.CC.ViewModel.Impl.MainView.Actions;
+using k3d.CC.ViewModel.Impl.LoginView;
 
 namespace k3d.CC.ViewModel.Impl
 {
@@ -42,7 +43,10 @@ namespace k3d.CC.ViewModel.Impl
             => new QuitAction(this, _mainView);
 
         IViewModelCollection IViewModelFactoryInternal.CreateViewModelCollection()
-            => throw new NotImplementedException();
+            => new ViewModelCollection();
+
+        ILoginViewModelInternal IViewModelFactoryInternal.CreateLoginViewModel()
+            => new LoginViewModel();
 
         private readonly ILogger _log;
         private readonly IModelFactory _modelFactory;
