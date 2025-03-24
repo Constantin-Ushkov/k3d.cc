@@ -1,4 +1,5 @@
-﻿using k3d.CC.ViewModel.Impl.LoginView;
+﻿using k3d.CC.ViewModel.Impl.Factory;
+using k3d.CC.ViewModel.Impl.LoginView;
 using k3d.CC.ViewModel.Interface;
 using k3d.Common.Diagnostics;
 
@@ -15,7 +16,7 @@ namespace k3d.CC.ViewModel.Impl.MainView
         public IParameterLessViewAction LogOutAction => _logoutAction;
         public IParameterLessViewAction QuitAction => _quitAction;
 
-        public MainViewModel(IViewModelFactoryInternal factory)
+        public MainViewModel(Factory.IViewModelFactory factory)
         {
             Assert.Argument.IsNotNull(factory, nameof(factory));
 
@@ -63,7 +64,7 @@ namespace k3d.CC.ViewModel.Impl.MainView
             throw new NotImplementedException();
         }
 
-        private readonly IViewModelFactoryInternal _factory;
+        private readonly Factory.IViewModelFactory _factory;
         private readonly IParameterLessViewActionInternal _logoutAction;
         private readonly IParameterLessViewActionInternal _quitAction;
         private readonly IViewModelCollection _viewModels;

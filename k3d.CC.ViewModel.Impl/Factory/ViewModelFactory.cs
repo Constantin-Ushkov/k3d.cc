@@ -8,16 +8,16 @@ using k3d.CC.ViewModel.Impl.MainView.Actions;
 using k3d.CC.ViewModel.Impl.LoginView;
 using k3d.CC.ViewModel.Impl.Controller;
 
-namespace k3d.CC.ViewModel.Impl
+namespace k3d.CC.ViewModel.Impl.Factory
 {
-    public class ViewModelFactory: IViewModelFactoryInternal
+    internal class ViewModelFactory : IViewModelFactory
     {
         public ViewModelFactory(IControllerInternal controller, ILogger log, IModelFactory modelFactory)
         {
             Assert.Argument.IsNotNull(controller, nameof(controller));
             Assert.Argument.IsNotNull(log, nameof(log));
             Assert.Argument.IsNotNull(modelFactory, nameof(modelFactory));
-            
+
             _controller = controller;
             _log = log;
             _modelFactory = modelFactory;
@@ -30,30 +30,25 @@ namespace k3d.CC.ViewModel.Impl
             => new ViewModel(_log, userVm, _modelFactory.CreateModel(userVm.GetUser()));
 
         public IMainView CreateMainView()
-        {
-            _mainView ??= new MainViewModel(this);
-            return _mainView;
-        }
+            => new MainViewModel(this);
 
-        //
-        // Explicit Implementation
-        //
+        public IParameterLessViewActionInternal CreateLogoutAction(IMainViewInternal mainView)
+            => new LogoutAction(mainView);
 
-        IParameterLessViewActionInternal IViewModelFactoryInternal.CreateLogoutAction()
-            => new LogoutAction(_mainView);
+        public IParameterLessViewActionInternal CreateQuitAction(IMainViewInternal mainView)
+            => new QuitAction(this, mainView);
 
-        IParameterLessViewActionInternal IViewModelFactoryInternal.CreateQuitAction()
-            => new QuitAction(this, _mainView);
-
-        IViewModelCollection IViewModelFactoryInternal.CreateViewModelCollection()
+        public IViewModelCollection CreateViewModelCollection()
             => new ViewModelCollection();
 
-        ILoginViewModelInternal IViewModelFactoryInternal.CreateLoginViewModel()
+        public ILoginViewModelInternal CreateLoginViewModel()
             => new LoginViewModel();
+
+        public IActivePropertyInternal<T> CreateActiveProperty<T>()
+            => new ActiveProperty<T>();
 
         private readonly IControllerInternal _controller;
         private readonly ILogger _log;
         private readonly IModelFactory _modelFactory;
-        private IMainViewInternal _mainView;
     }
 }

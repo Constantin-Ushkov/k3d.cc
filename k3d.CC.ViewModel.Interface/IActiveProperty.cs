@@ -3,8 +3,8 @@ namespace k3d.CC.ViewModel.Interface
 {
     public interface IActiveProperty<T>
     {
-        event EventHandler<ActivePropertyChangedEventArgs<T>> Changed;
+        event EventHandler<ActivePropertyChangedEventArgs<T>>? Changed;
 
-        T Value { get; }
+        T? Value { get; }
     }
 }

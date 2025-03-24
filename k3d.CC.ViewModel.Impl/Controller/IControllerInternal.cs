@@ -1,10 +1,11 @@
-﻿using k3d.CC.ViewModel.Interface;
+﻿using k3d.CC.ViewModel.Impl.Factory;
+using k3d.CC.ViewModel.Interface;
 
 namespace k3d.CC.ViewModel.Impl.Controller
 {
     internal interface IControllerInternal : IViewModelController
     {
-        IViewModelFactoryInternal Factory { get; }
+        Factory.IViewModelFactory Factory { get; }
         IViewModelCollection Views { get; }
 
         void DisplayView<T>(bool modal) where T : class, IViewModelInternal;

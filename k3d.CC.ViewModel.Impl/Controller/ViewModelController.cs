@@ -1,4 +1,5 @@
 ﻿using k3d.CC.Model.Interface;
+using k3d.CC.ViewModel.Impl.Factory;
 using k3d.CC.ViewModel.Interface;
 using k3d.CC.ViewModel.Interface.MainView;
 using k3d.Logging.Interface;
@@ -13,13 +14,13 @@ namespace k3d.CC.ViewModel.Impl.Controller
         public event EventHandler? LoggedIn;
         public event EventHandler? LoggedOut;
 
-        public IViewModelFactoryInternal Factory { get; }
+        public IViewModelFactory Factory { get; }
         public IMainView MainView { get; }
         public IViewModelCollection Views { get; }
 
         public ViewModelController(ILogger logger, IModelFactory modelFactory)
         {
-            Factory = new ViewModelFactory(logger, modelFactory);
+            Factory = new ViewModelFactory(this, logger, modelFactory);
 
             Views = Factory.CreateViewModelCollection();
             MainView = Factory.CreateMainView();

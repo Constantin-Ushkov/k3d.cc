@@ -1,10 +1,11 @@
-﻿using k3d.CC.ViewModel.Interface;
+﻿using k3d.CC.ViewModel.Impl.Factory;
+using k3d.CC.ViewModel.Interface;
 
 namespace k3d.CC.ViewModel.Impl.MainView.Actions
 {
     internal class QuitAction : MainViewAction, IParameterLessViewActionInternal
     {
-        public QuitAction(IViewModelFactoryInternal factory, IMainViewInternal view)
+        public QuitAction(Factory.IViewModelFactory factory, IMainViewInternal view)
             : base(factory, view)
         {
         }

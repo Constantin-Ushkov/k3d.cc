@@ -1,4 +1,5 @@
-﻿using k3d.CC.ViewModel.Interface;
+﻿using k3d.CC.ViewModel.Impl.Factory;
+using k3d.CC.ViewModel.Interface;
 
 namespace k3d.CC.ViewModel.Impl
 {
@@ -6,7 +7,7 @@ namespace k3d.CC.ViewModel.Impl
     {
         public IActiveProperty<bool> IsEnabled => _enabled;
 
-        protected ViewModelAction(IViewModelFactoryInternal factory)
+        protected ViewModelAction(Factory.IViewModelFactory factory)
         {
             _enabled = factory?.CreateActiveProperty<bool>()
                 ?? throw new ArgumentNullException(nameof(factory));
