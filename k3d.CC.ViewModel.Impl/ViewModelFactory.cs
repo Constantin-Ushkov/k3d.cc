@@ -6,16 +6,19 @@ using k3d.CC.ViewModel.Interface.MainView;
 using k3d.CC.ViewModel.Impl.MainView;
 using k3d.CC.ViewModel.Impl.MainView.Actions;
 using k3d.CC.ViewModel.Impl.LoginView;
+using k3d.CC.ViewModel.Impl.Controller;
 
 namespace k3d.CC.ViewModel.Impl
 {
     public class ViewModelFactory: IViewModelFactoryInternal
     {
-        public ViewModelFactory(ILogger log, IModelFactory modelFactory)
+        public ViewModelFactory(IControllerInternal controller, ILogger log, IModelFactory modelFactory)
         {
+            Assert.Argument.IsNotNull(controller, nameof(controller));
             Assert.Argument.IsNotNull(log, nameof(log));
             Assert.Argument.IsNotNull(modelFactory, nameof(modelFactory));
             
+            _controller = controller;
             _log = log;
             _modelFactory = modelFactory;
         }
@@ -48,6 +51,7 @@ namespace k3d.CC.ViewModel.Impl
         ILoginViewModelInternal IViewModelFactoryInternal.CreateLoginViewModel()
             => new LoginViewModel();
 
+        private readonly IControllerInternal _controller;
         private readonly ILogger _log;
         private readonly IModelFactory _modelFactory;
         private IMainViewInternal _mainView;

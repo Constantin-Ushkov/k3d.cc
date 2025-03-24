@@ -27,6 +27,7 @@ namespace k3d.CC.View.WinForms
             var modelFactory = new ModelFactory(logging.Loggers.GetLogger("model", ""), storage, hasher);
             var viewModelFactory = new ViewModelFactory(logging.Loggers.GetLogger("view-model", ""), modelFactory);
 
+            // params: new MainForm(application, application.MainView);
             Application.Run(new MainForm(viewModelFactory.CreateMainView()));
         }
     }
