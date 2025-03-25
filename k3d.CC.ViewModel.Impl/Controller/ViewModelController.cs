@@ -24,6 +24,8 @@ namespace k3d.CC.ViewModel.Impl.Controller
 
             Views = Factory.CreateViewModelCollection();
             MainView = Factory.CreateMainView();
+
+            Views.AddSingleton(Factory.CreateLoginViewModel());
         }
 
         public void DisplayView<T>(bool modal) where T : class, IViewModelInternal
@@ -48,8 +50,6 @@ namespace k3d.CC.ViewModel.Impl.Controller
         }
 
         public void ReportError(string message, Exception? exception = null)
-        {
-            throw new NotImplementedException();
-        }
+            => Error?.Invoke(this, new Interface.ErrorEventArgs(message, exception));
     }
 }

@@ -12,5 +12,7 @@ namespace k3d.CC.ViewModel.Interface
         event EventHandler? LoggedOut;
 
         IMainView MainView { get; }
+
+        void ReportError(string message, Exception? exception = null);
     }
 }

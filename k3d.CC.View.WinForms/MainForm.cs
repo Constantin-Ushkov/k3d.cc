@@ -14,23 +14,24 @@ namespace k3d.CC.View.WinForms
             public const string Title = "Control Center";
         }
 
-        public MainForm(IMainView viewModel)
+        public MainForm(IViewModelController vmController, IMainView viewModel)
         {
             /* debug
             var tempConfig = AppConfig.CreateDefault();
             tempConfig.SaveToFile(System.Environment.ProcessPath + ".cfg");
             */
 
+            _vmController = vmController;
             _viewModel = viewModel;
 
-            _viewModel.ShowView += OnShowView;
-            _viewModel.ShowModalView += OnShowViewModal;
+            _vmController.ShowView += OnShowView;
+            _vmController.ShowModalView += OnShowViewModal;
 
             InitializeComponent();
 
-            _viewModel.LoggedIn += OnLogin;
-            _viewModel.LoggedOut += OnLogout;
-            _viewModel.Error += OnError;
+            _vmController.LoggedIn += OnLogin;
+            _vmController.LoggedOut += OnLogout;
+            _vmController.Error += OnError;
 
             _viewModel.QuitAction.IsEnabled.Changed += OnQuitActionEnabledChanged;
             _viewModel.LogOutAction.IsEnabled.Changed += OnLogoutActionEnabledChanged;
@@ -70,7 +71,7 @@ namespace k3d.CC.View.WinForms
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            _viewModel.OnShown(); // _loginForm.ShowDialog();
+            _viewModel.OnShown();
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -92,7 +93,7 @@ namespace k3d.CC.View.WinForms
         private void OnError(object? sender, ViewModel.Interface.ErrorEventArgs args)
         {
 #if DEBUG
-            MessageBox.Show(args.Exception.ToDetailedString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(args.Exception!.ToDetailedString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 #else
             MessageBox.Show(args.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 #endif
@@ -106,7 +107,7 @@ namespace k3d.CC.View.WinForms
             }
             else
             {
-                _viewModel.ReportError(
+                _vmController.ReportError(
                     $"No view is registered to show for {e.ViewModel.ViewType} view-model type.");
             }
         }
@@ -119,7 +120,7 @@ namespace k3d.CC.View.WinForms
             }
             else
             {
-                _viewModel.ReportError(
+                _vmController.ReportError(
                     $"No view is registered to show modal for {e.ViewModel.ViewType} view-model type.");
             }
         }
@@ -185,6 +186,7 @@ namespace k3d.CC.View.WinForms
             _vm = null;
         }
 
+        private readonly IViewModelController _vmController;
         private readonly IMainView _viewModel;
         private readonly Dictionary<ViewType, Action<IViewModel2?>> _showViewActions = [];
         private readonly Dictionary<ViewType, Action<IViewModel2?>> _showModalViewActions = new() {
@@ -194,7 +196,6 @@ namespace k3d.CC.View.WinForms
         private readonly IApplicationConfiguration _config;
         private readonly ILoggingService _logging;
         private readonly IDataProvider _storage;
-        private readonly IViewModelFactory _vmFactory;
         private readonly IUserViewModel _userVm;
         private IViewModel? _vm;
         private readonly LoginDialog _loginForm;
